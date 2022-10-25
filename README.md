@@ -39,7 +39,7 @@ Before installation, please make sure you have already installed the following t
 
 create a folder named (venv)
 
-3. Run follow cmd
+3. Run the following cmd
 
 ```bash
 python3 -m venv root-venvFolder-path/venv
@@ -51,7 +51,7 @@ python3 -m venv root-venvFolder-path/venv
 source venv/bin/activate
 ```
 
-6. cd into app dir where you can find requirements.tx to Install all packages using the following cmd
+6. cd into app dir where you can find requirements.txt to Install all packages using the following cmd
 
 ```bash
 pip install -r requirements.txt
