@@ -1,4 +1,4 @@
-## Jum-Jacket store(frontend)
+## Jum-Jacket store(backend)
 
 An ecommerce api which allows authentication of users, which also integrates payment using paystack.
 using serializers to convert python objects to json and xml and also deserializing json and xml back to python objects.
