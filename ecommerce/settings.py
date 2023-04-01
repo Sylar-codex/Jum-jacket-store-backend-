@@ -30,7 +30,7 @@ SECRET_KEY = os.environ.get("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOST = ['https://jum-jacket-store-backend-production.up.railway.app']
+ALLOWED_HOST = []
 
 
 # Application definition
