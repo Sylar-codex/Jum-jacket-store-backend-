@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'corsheaders',
 ]
 
+
 REST_FRAMEWORK = {
     'DEFAULT_AUNTHENTICATION_CLASSES' :
     ('knox.auth.TokenAuthentication',),

@@ -4,6 +4,8 @@ An ecommerce api which allows authentication of users, which also integrates pay
 using serializers to convert python objects to json and xml and also deserializing json and xml back to python objects.
 usuage of cloudinary for image optimization in database.
 
+updating the database soon...
+
 ## Tools and language
 
 <table>
