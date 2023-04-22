@@ -148,6 +148,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 #      "https://glistening-tartufo-85e110.netlify.app/"
 # ]
 
+CORS_ALLOW_ALL_ORIGINS: True
+
 CLOUDINARY_STORAGE = {
     'CLOUD_NAME' : os.environ.get("CLOUDINARY_CLOUD_NAME"), 
     'API_KEY' :os.environ.get("CLOUDINARY_API_KEY"),
