@@ -143,10 +143,10 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-CORS_ALLOWED_ORIGINS = [
-     'http://localhost:3000',
-     "https://glistening-tartufo-85e110.netlify.app/"
-]
+# CORS_ALLOWED_ORIGINS = [
+#      'http://localhost:3000',
+#      "https://glistening-tartufo-85e110.netlify.app/"
+# ]
 
 CLOUDINARY_STORAGE = {
     'CLOUD_NAME' : os.environ.get("CLOUDINARY_CLOUD_NAME"), 
