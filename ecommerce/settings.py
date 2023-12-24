@@ -153,11 +153,12 @@ if not DEBUG:
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-CORS_ALLOWED_ORIGINS = [
-     'http://localhost:3000',
-     "https://"+os.environ.get("FRONTEND_HOST")
-]
+# CORS_ALLOWED_ORIGINS = [
+#      'http://localhost:3000',
+#      "https://"+os.environ.get("FRONTEND_HOST")
+# ]
 
+CORS_ALLOWED_ORIGINS = ['*']
 CORS_ALLOW_ALL_ORIGINS: True
 CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOW_HEADERS = ['*']
