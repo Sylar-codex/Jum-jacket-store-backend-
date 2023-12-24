@@ -16,6 +16,7 @@ import os
 
 import cloudinary
 import cloudinary_storage
+from corsheaders.defaults import default_headers
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -160,7 +161,10 @@ CORS_ALLOWED_ORIGINS = [
 
 CORS_ALLOW_ALL_ORIGINS: True
 CORS_ALLOW_CREDENTIALS = True
-CORS_ALLOW_HEADERS = ['*']
+CORS_ALLOW_HEADERS = (
+    *default_headers,
+    "my-custom-header",
+)
 
 CLOUDINARY_STORAGE = {
     'CLOUD_NAME' : os.environ.get("CLOUDINARY_CLOUD_NAME"), 
