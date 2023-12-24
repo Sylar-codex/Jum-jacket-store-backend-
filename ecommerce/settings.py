@@ -164,6 +164,9 @@ CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOW_HEADERS = (
     *default_headers,
 )
+CSRF_TRUSTED_ORIGINS = [
+    os.environ.get("FRONTEND_HOST"),
+]
 
 CLOUDINARY_STORAGE = {
     'CLOUD_NAME' : os.environ.get("CLOUDINARY_CLOUD_NAME"), 
