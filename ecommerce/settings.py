@@ -161,9 +161,25 @@ CORS_ALLOWED_ORIGINS = [
 
 CORS_ALLOW_ALL_ORIGINS: True
 CORS_ALLOW_CREDENTIALS = True
+
 CORS_ALLOW_HEADERS = (
-    *default_headers,
+    "accept",
+    "authorization",
+    "content-type",
+    "user-agent",
+    "x-csrftoken",
+    "x-requested-with",
 )
+
+CORS_ALLOW_METHODS = (
+    "DELETE",
+    "GET",
+    "OPTIONS",
+    "PATCH",
+    "POST",
+    "PUT",
+)
+
 CSRF_TRUSTED_ORIGINS = [
     os.environ.get("FRONTEND_HOST"),
 ]
