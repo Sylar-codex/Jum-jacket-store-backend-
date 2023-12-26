@@ -181,7 +181,8 @@ CORS_ALLOW_METHODS = (
 )
 
 CSRF_TRUSTED_ORIGINS = [
-    os.environ.get("FRONTEND_HOST"),
+    "https://"+os.environ.get("FRONTEND_HOST"),
+    'http://localhost:3000'
 ]
 
 CLOUDINARY_STORAGE = {
