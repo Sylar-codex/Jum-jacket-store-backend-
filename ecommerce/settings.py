@@ -74,6 +74,7 @@ MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
     'whitenoise.middleware.WhiteNoiseMiddleware',
+    "wallet.middleware.PaystackMiddleware",
 ]
 
 ROOT_URLCONF = 'ecommerce.urls'
