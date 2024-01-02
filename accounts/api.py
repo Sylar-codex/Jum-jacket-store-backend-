@@ -89,16 +89,8 @@ class PasswordTokenCheckAPI(generics.GenericAPIView) :
 class SetNewPasswordAPI(generics.GenericAPIView) :
     serializer_class = SetNewPasswordSerializer
 
-    def patch(self,request,uidb64,token):
+    def patch(self,request,):
         serializer = self.get_serializer(data=request)
+        serializer.is_valid(raise_exception=True)
 
-        password = request.data['password']
-
-        id = force_str(urlsafe_base64_decode(uidb64))
-        user = User.objects.get(id=id)
-        if not PasswordResetTokenGenerator().check_token(user,token):
-            return Response({"error":"The reset link is invalid"})
-        user.set_password(password)
-        user.save()
-
-        return Response({"message":"You have successfully reset your password"})
+        return Response({"success":True,"message":"You have successfully reset your password"})
