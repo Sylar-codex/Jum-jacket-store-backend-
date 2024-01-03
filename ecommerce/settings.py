@@ -31,7 +31,7 @@ SECRET_KEY = os.environ.get("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get("DEBUG_VAL", "False") == "True"
 
-ALLOWED_HOSTS = [os.environ.get("PRODUCTION_HOST"),os.environ.get("FRONTEND_HOST")]
+ALLOWED_HOSTS = [os.environ.get("PRODUCTION_HOST"),os.environ.get("FRONTEND_HOST"),os.environ.get("DEVELOPMENT_HOST")]
 
 RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
 if RENDER_EXTERNAL_HOSTNAME:
@@ -74,7 +74,6 @@ MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
     'whitenoise.middleware.WhiteNoiseMiddleware',
-    "wallet.middleware.PaystackMiddleware",
 ]
 
 ROOT_URLCONF = 'ecommerce.urls'
@@ -157,7 +156,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CORS_ALLOWED_ORIGINS = [
      'http://localhost:3000',
-     "https://"+os.environ.get("FRONTEND_HOST")
+     "https://"+os.environ.get("FRONTEND_HOST"),
+     "https://"+os.environ.get("DEVELOPMENT_HOST")
 ]
 
 CORS_ALLOW_ALL_ORIGINS: True

@@ -38,12 +38,12 @@ class ResetPasswordEmailRequestSerializer(serializers.Serializer) :
         fields =['email']
 
 class SetNewPasswordSerializer(serializers.Serializer) :
-    password = serializers.CharField(min_length=6,write_only=True )
-    token = serializers.CharField()
-    uidb64 = serializers.CharField(min_length=1,write_only=True )
+    password = serializers.CharField(min_length=6,write_only=True)
+    token = serializers.CharField(min_length=6,write_only=True )
+    uidb64 = serializers.CharField(min_length=1,write_only=True)
 
     class Meta:
-        fields= ["password"]
+        fields= ["password","token","uidb64"]
     def validate(self, data):
         password = data.get('password')
         token = data.get('token')

@@ -1,4 +1,4 @@
-import re
+import os
 from rest_framework import generics, permissions
 from rest_framework.response import Response
 from knox.models import AuthToken
@@ -61,15 +61,16 @@ class RequestPasswordResetEmail(generics.GenericAPIView) :
             user = User.objects.get(email=email)
             uidb64 = urlsafe_base64_encode(smart_bytes(user.id))
             token = PasswordResetTokenGenerator().make_token(user)
-            current_site = get_current_site(request=request).domain
-            relativeLink = reverse('password-reset-confirm',kwargs={'uidb64':uidb64,"token":token})
-            absurl = 'http://'+ current_site + relativeLink
-            email_body = "Hi " +user.first_name+' use this link to reset your password \n' +absurl
+            # current_site = get_current_site(request=request).domain
+            # relativeLink = reverse('password-reset-confirm',kwargs={'uidb64':uidb64,"token":token})
+            # absurl = 'http://'+ current_site + relativeLink
+            frontend_host = os.environ.get("FRONTEND_HOST")
+            email_body = "http://{}/#/reset-passowrd/{}/{}".format(frontend_host,uidb64,token)
             email_data = {'email_body':email_body, "to_email":user.email,"email_subject":"reset your password"}
 
             Util.send_email(email_data)
 
-        return Response({"succes":"A link has been sent to your email to reset your password, check spam folder as well"})
+        return Response({"succes":True,"message":"A link has been sent to your email to reset your password, check spam folder as well"})
 
 class PasswordTokenCheckAPI(generics.GenericAPIView) :
     serializer_class = SetNewPasswordSerializer
