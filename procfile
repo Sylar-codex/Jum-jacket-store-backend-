@@ -1,1 +1,1 @@
-web: gunicorn ecommerce.wsgi --log-file --timeout 300 --workers=3 --threads=3 --worker-connections=1000 --worker-class=gevent
+web: gunicorn ecommerce.wsgi --log-file --timeout 900 --workers=3 --threads=3 --worker-connections=1000 --worker-class=gevent
