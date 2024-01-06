@@ -65,7 +65,7 @@ class RequestPasswordResetEmail(generics.GenericAPIView) :
             # relativeLink = reverse('password-reset-confirm',kwargs={'uidb64':uidb64,"token":token})
             # absurl = 'http://'+ current_site + relativeLink
             frontend_host = os.environ.get("FRONTEND_HOST")
-            email_body = "https://{}/#/reset-passowrd/{}/{}".format(frontend_host,uidb64,token)
+            email_body = "http://{}/#/reset-password/{}/{}".format(frontend_host,uidb64,token)
             email_data = {'email_body':email_body, "to_email":user.email,"email_subject":"reset your password"}
 
             Util.send_email(email_data)
@@ -91,7 +91,7 @@ class SetNewPasswordAPI(generics.GenericAPIView) :
     serializer_class = SetNewPasswordSerializer
 
     def patch(self,request,):
-        serializer = self.get_serializer(data=request)
+        serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
 
         return Response({"success":True,"message":"You have successfully reset your password"})

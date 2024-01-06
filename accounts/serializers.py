@@ -38,7 +38,7 @@ class ResetPasswordEmailRequestSerializer(serializers.Serializer) :
         fields =['email']
 
 class SetNewPasswordSerializer(serializers.Serializer) :
-    password = serializers.CharField(min_length=6,write_only=True)
+    password = serializers.CharField(min_length=5,write_only=True)
     token = serializers.CharField(min_length=6,write_only=True )
     uidb64 = serializers.CharField(min_length=1,write_only=True)
 
