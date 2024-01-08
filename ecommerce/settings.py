@@ -14,9 +14,10 @@ from pathlib import Path
 from PIL import Image
 import os
 
-import cloudinary
-import cloudinary_storage
 from corsheaders.defaults import default_headers
+
+import redis
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -185,6 +186,35 @@ CSRF_TRUSTED_ORIGINS = [
     "https://"+os.environ.get("FRONTEND_HOST"),
     'http://localhost:3000'
 ]
+
+HUEY = {
+    "name": "ecommerce",
+    "huey_class": "huey.PriorityRedisExpireHuey",
+    "immediate": False,
+    "utc": True,
+    "consumer": {
+        "workers": 2,
+        "worker_type": "thread",
+        "initial_delay": 0.1,
+        "backoff": 1.15,
+        "max_delay": 10.0,
+        "scheduler_interval": 1,
+        "periodic": True,
+        "check_worker_health": True,
+    },
+}
+
+from huey import RedisHuey
+from redis import ConnectionPool
+
+pool = ConnectionPool(
+    host="oregon-redis.render.com",
+    port=6379,
+    username=os.environ.get("REDIS_USERNAME"),
+    password=os.environ.get("REDIS_PASSWORD"),
+    max_connections=20,
+)
+HUEY = RedisHuey("wallet", connection_pool=pool)
 
 CLOUDINARY_STORAGE = {
     'CLOUD_NAME' : os.environ.get("CLOUDINARY_CLOUD_NAME"), 

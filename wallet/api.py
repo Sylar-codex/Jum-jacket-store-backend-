@@ -7,6 +7,7 @@ from rest_framework import viewsets, permissions
 from knox.auth import TokenAuthentication
 from django.conf import settings
 import requests
+import json
 
 
 class WalletInfoAPI(generics.GenericAPIView) :
@@ -53,3 +54,8 @@ class VerifyDepositAPI(generics.GenericAPIView) :
 
             return Response(resp)
         return Response(resp)
+
+class PaystackWebhookView(generics.GenericAPIView) :
+    def post(self,request,*args,**kwargs) :
+        data = json.loads(request.body.decode("utf-8"))
+        return Response(data={})
