@@ -8,6 +8,8 @@ from knox.auth import TokenAuthentication
 from django.conf import settings
 import requests
 import json
+from commerce.models import Cart
+from functools import reduce
 
 
 class WalletInfoAPI(generics.GenericAPIView) :
@@ -34,13 +36,15 @@ class DepositFundsAPI(generics.GenericAPIView) :
         return Response(resp)
 
 class VerifyDepositAPI(generics.GenericAPIView) :
-    authentication_classes =(TokenAuthentication,)
-    permission_classes = {
-        permissions.IsAuthenticated
-    }
+    # authentication_classes =(TokenAuthentication,)
+    # permission_classes = {
+    #     permissions.IsAuthenticated
+    # }
     def get(self,request,reference) :
         transaction=WalletTransaction.objects.get(paystack_payment_ref=reference, wallet__user=request.user)
         reference= transaction.paystack_payment_ref
+
+
         url = "https://api.paystack.co/transaction/verify/{}".format(reference)
         
         headers ={"authorization":f'Bearer {settings.PAYSTACK_SECRET_KEY}'}
