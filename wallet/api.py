@@ -8,8 +8,7 @@ from knox.auth import TokenAuthentication
 from django.conf import settings
 import requests
 import json
-from commerce.models import Cart
-from functools import reduce
+from .tasks import handle_webhook
 
 
 class WalletInfoAPI(generics.GenericAPIView) :
@@ -62,4 +61,5 @@ class VerifyDepositAPI(generics.GenericAPIView) :
 class PaystackWebhookView(generics.GenericAPIView) :
     def post(self,request,*args,**kwargs) :
         data = json.loads(request.body.decode("utf-8"))
+        handle_webhook(data)
         return Response(data={})
