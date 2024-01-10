@@ -1,10 +1,14 @@
 ## Jum-Jacket store(backend)
 
-An ecommerce api which allows authentication of users, which also integrates payment using paystack.
-using serializers to convert python objects to json and xml and also deserializing json and xml back to python objects.
-usuage of cloudinary for image optimization in database.
+An ecommerce api which allows Users shop for jackets online. it supports authentication and authorization of users.
 
-updating the database soon...
+# Technologies used
+
+- Django restframework
+- Cloudinary to optimize image stored in database
+- huey & redis to run task in the background
+- Paystack as a payment gateway
+- Deployed on render
 
 ## Tools and language
 
@@ -58,6 +62,7 @@ source venv/bin/activate
 ```bash
 pip install -r requirements.txt
 ```
+> **Note**: For variables where environmental variables are used. They usually contain sensitive credentials, so sometimes it is best you create an account and then apply the required information.
 
 7. makemigrations and migrate
 
