@@ -195,10 +195,11 @@ CSRF_TRUSTED_ORIGINS = [
 ]
 
 HUEY = {
-    "name": "ecommerce",
+    "name": "sylarcode_db",
     "huey_class": "huey.PriorityRedisExpireHuey",
     "immediate": False,
     "utc": True,
+    "url":os.environ.get("REDIS_URL"),
     "consumer": {
         "workers": 2,
         "worker_type": "thread",
@@ -211,17 +212,6 @@ HUEY = {
     },
 }
 
-from huey import RedisHuey
-from redis import ConnectionPool
-
-pool = ConnectionPool(
-    host="oregon-redis.render.com",
-    port=6379,
-    username=os.environ.get("REDIS_USERNAME"),
-    password=os.environ.get("REDIS_PASSWORD"),
-    max_connections=20,
-)
-HUEY = RedisHuey("wallet", connection_pool=pool)
 
 CLOUDINARY_STORAGE = {
     'CLOUD_NAME' : os.environ.get("CLOUDINARY_CLOUD_NAME"), 

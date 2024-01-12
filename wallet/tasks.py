@@ -17,7 +17,7 @@ def handle_webhook(payload:dict) :
             carts = Cart.objects.filter(owner=user).filter(paid=False).values()
             acc_list = list(carts)
             acc_amount = reduce(lambda prev, curr: prev + curr["count"] * curr["price"], acc_list,0)
-            amount = (payload["data"]["amount"]//100 )- 1500
+            amount = (payload["data"]["amount"]//100 ) - 1500
             if acc_amount == amount :
                 Cart.objects.filter(owner=user).filter(paid=False).update(paid=True)
         except :
