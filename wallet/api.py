@@ -35,10 +35,10 @@ class DepositFundsAPI(generics.GenericAPIView) :
         return Response(resp)
 
 class VerifyDepositAPI(generics.GenericAPIView) :
-    # authentication_classes =(TokenAuthentication,)
-    # permission_classes = {
-    #     permissions.IsAuthenticated
-    # }
+    authentication_classes =(TokenAuthentication,)
+    permission_classes = {
+        permissions.IsAuthenticated
+    }
     def get(self,request,reference) :
         transaction=WalletTransaction.objects.get(paystack_payment_ref=reference, wallet__user=request.user)
         reference= transaction.paystack_payment_ref

@@ -9,6 +9,7 @@ An ecommerce api which allows Users shop for jackets online. it supports authent
 - huey & redis to run task in the background
 - Paystack as a payment gateway
 - Deployed on render
+- database: postgreSQL
 
 ## Tools and language
 
@@ -62,6 +63,7 @@ source venv/bin/activate
 ```bash
 pip install -r requirements.txt
 ```
+
 > **Note**: For variables where environmental variables are used. They usually contain sensitive credentials, so sometimes it is best you create an account and then apply the required information.
 
 7. makemigrations and migrate
