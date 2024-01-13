@@ -57,6 +57,7 @@ INSTALLED_APPS = [
     'knox',
     'wallet',
     'corsheaders',
+    'huey.contrib.djhuey',
 ]
 
 
