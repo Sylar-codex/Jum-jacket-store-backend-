@@ -50,6 +50,7 @@ class VerifyDepositAPI(generics.GenericAPIView) :
         r = requests.get(url, headers=headers)
         resp = r.json()
 
+
         if resp['data']['status'] == 'success' :
             status = resp['data']['status']
             amount = resp['data']['amount']

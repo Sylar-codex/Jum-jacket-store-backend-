@@ -4,9 +4,10 @@ from .models import Wallet,WalletTransaction
 from commerce.models import Cart
 from functools import reduce
 
-logger = logging.getLogger("huey")
+logger = logging.getLogger("huey.consumer")
 
-@db_task
+
+@db_task()
 def handle_webhook(payload:dict) :
     logger.info("handling webhook event for {}".format(payload["event"]))
     if payload["event"] == "charge.success" :
