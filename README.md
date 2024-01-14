@@ -10,6 +10,7 @@ An ecommerce api which allows Users shop for jackets online. it supports authent
 - Paystack as a payment gateway
 - Deployed on render
 - database: postgreSQL
+- SMTP service : Google mail
 
 ## Tools and language
 

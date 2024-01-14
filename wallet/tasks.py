@@ -7,7 +7,7 @@ from functools import reduce
 logger = logging.getLogger(__name__)
 
 
-# @db_task()
+@db_task()
 def handle_webhook(payload:dict) :
     logger.info("handling webhook event for {}".format(payload["event"]))
     if payload["event"] == "charge.success" :
