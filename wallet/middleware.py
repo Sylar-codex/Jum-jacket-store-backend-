@@ -7,7 +7,7 @@ from django.http.response import HttpResponseNotFound
 
 class PaystackMiddleware :
     def __init__(self, get_response) -> None:
-        self.response = get_response
+        self.get_response = get_response
 
     
     def __call__(self, request):
