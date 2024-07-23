@@ -55,20 +55,7 @@ def handle_stripe_webhook(payload:dict) :
             carts = Cart.objects.filter(owner=user).filter(paid=False).values()
             acc_list = list(carts)
             acc_amount = reduce(lambda prev, curr: prev + curr["count"] * curr["price_dollar"], acc_list,0)
-            amount = (payment_intent["data"]["amount"]//100 ) - 20
-            if acc_amount == amount :
-                Cart.objects.filter(owner=user).filter(paid=False).update(paid=True)
-        except :
-            logger.error("can't find transaction with ID {}".format(stripe_payment_intent))
-    elif payload["event"] == "transfer.success" :
-        stripe_payment_intent = payload["reference"]
-        try:
-            wallet = WalletTransactionStripe.objects.get(stripe_payment_intent=stripe_payment_intent)
-            user = wallet.wallet.user
-            carts = Cart.objects.filter(owner=user).filter(paid=False).values()
-            acc_list = list(carts)
-            acc_amount = reduce(lambda prev, curr: prev + curr["count"] * curr["price_dollar"], acc_list,0)
-            amount = (payment_intent["data"]["amount"]//100 ) - 20
+            amount = (payment_intent["amount"]//100 ) - 20
             if acc_amount == amount :
                 Cart.objects.filter(owner=user).filter(paid=False).update(paid=True)
         except :
