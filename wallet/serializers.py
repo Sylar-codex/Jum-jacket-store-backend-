@@ -1,10 +1,11 @@
 from wsgiref.validate import validator
 from rest_framework import serializers
 from django.db.models import Sum 
-from .models import Wallet, WalletTransaction
+from .models import Wallet, WalletTransaction, WalletTransactionStripe
 from django.conf import settings
 from django.contrib.auth.models import User
 import requests
+import stripe
 
 
 class WalletSerializer(serializers.ModelSerializer) :
@@ -54,3 +55,27 @@ class DepositSerializer(serializers.Serializer) :
         )
 
         return response
+
+class DepositInStripe(serializers.Serializer) :
+    amount = serializers.IntegerField(validators=[is_amount])
+
+    def create(self, validated_data) :
+        user = self.context['request'].user
+        wallet = Wallet.objects.filter(user=user).exists()
+        if not wallet:
+            wallet = Wallet.objects.create(user=user)
+            wallet.currency = "USD"
+        wallet = Wallet.objects.get(user=user)
+        
+        stripe.api_key = settings.STRIPE_SECRET_KEY
+
+        response = stripe.PaymentIntent.create(
+            amount = validated_data["amount"],
+            currency = "usd"
+        )
+        WalletTransactionStripe.objects.create(
+            wallet=wallet,
+            amount = response.amount,
+            stripe_payment_intent = response.id
+        )
+        return {"client_secret":response.client_secret}

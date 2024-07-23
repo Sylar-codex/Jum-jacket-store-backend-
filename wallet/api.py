@@ -1,5 +1,5 @@
 from rest_framework import generics, permissions
-from .serializers import WalletSerializer, DepositSerializer
+from .serializers import WalletSerializer, DepositSerializer,DepositInStripe
 from .models import Wallet, WalletTransaction
 from rest_framework.response import Response
 from knox.auth import TokenAuthentication
@@ -8,7 +8,7 @@ from knox.auth import TokenAuthentication
 from django.conf import settings
 import requests
 import json
-from .tasks import handle_webhook
+from .tasks import handle_webhook, handle_stripe_webhook
 
 
 class WalletInfoAPI(generics.GenericAPIView) :
@@ -64,3 +64,23 @@ class PaystackWebhookView(generics.GenericAPIView) :
         data = json.loads(request.body.decode("utf-8"))
         handle_webhook(data)
         return Response(data={})
+    
+class DepositInStripeAPI(generics.GenericAPIView) :
+    authentication_classes =(TokenAuthentication,)
+    permission_classes = {
+        permissions.IsAuthenticated
+    }
+    serializer_class = DepositInStripe
+    def post(self,request) :
+        serializer = self.get_serializer(data=request.data, context={'request':request})
+        serializer.is_valid(raise_exception= True)
+        resp = serializer.save()
+        return Response(resp)
+    
+
+class StripeWebhookView(generics.GenericAPIView) :
+    def post(self,request,*args,**kwargs) :
+        data = json.loads(request.body.decode("utf-8"))
+        handle_stripe_webhook(data)
+        return Response(data={})
+    

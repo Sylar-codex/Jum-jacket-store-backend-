@@ -27,3 +27,9 @@ class WalletTransaction(models.Model) :
 
     def __str__(self) :
         return self.wallet.user.__str__()
+    
+class WalletTransactionStripe(models.Model) :
+    wallet = models.ForeignKey(Wallet, null=True, on_delete=models.CASCADE)
+    stripe_payment_intent = models.CharField(max_length=100, default='', blank=True)
+    timestamp = models.DateTimeField(default=timezone.now, null=True)
+    amount = models.DecimalField(max_digits=70,null=True, decimal_places=2)
