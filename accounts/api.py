@@ -95,3 +95,8 @@ class SetNewPasswordAPI(generics.GenericAPIView) :
         serializer.is_valid(raise_exception=True)
 
         return Response({"success":True,"message":"You have successfully reset your password"})
+    
+
+# Google Auth
+
+

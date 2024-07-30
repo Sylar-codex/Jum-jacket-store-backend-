@@ -238,3 +238,9 @@ EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASS")
 PAYSTACK_SECRET_KEY = os.environ.get("PAYSTACK_SECRET_KEY")
 
 STRIPE_SECRET_KEY = os.environ.get("STRIPE_SECRET_KEY")
+
+# Google Credentials
+
+GOOGLE_CLIENT_ID = os.environ.get("GOOGLE_CLIENT_ID")
+GOOGLE_CLIENT_SECRET = os.environ.get("GOOGLE_CLIENT_SECRET")
+GOOGLE_PROJECT_ID = os.environ.get("GOOGLE_PROJECT_ID")
