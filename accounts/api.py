@@ -2,7 +2,7 @@ import os
 from rest_framework import generics, permissions
 from rest_framework.response import Response
 from knox.models import AuthToken
-from .serializers import UserSerializer,LoginSerializers,RegisterSerializer,ResetPasswordEmailRequestSerializer,SetNewPasswordSerializer
+from .serializers import UserSerializer,LoginSerializers,RegisterSerializer,ResetPasswordEmailRequestSerializer,SetNewPasswordSerializer,GoogleLoginInputSerializer
 from django.contrib.auth.models import User
 from knox.auth import TokenAuthentication
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
@@ -10,8 +10,8 @@ from django.utils.encoding import smart_str,force_str,smart_bytes,DjangoUnicodeD
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.contrib.sites.shortcuts import get_current_site
 from django.urls import reverse
-from .utils import Util
-from django.shortcuts import render
+from .utils import Util, GoogleRawLoginFlowService
+from django.shortcuts import redirect
 
 
 #Register API
@@ -98,5 +98,29 @@ class SetNewPasswordAPI(generics.GenericAPIView) :
     
 
 # Google Auth
+class GoogleLoginRedirectAPI(generics.GenericAPIView) :
+    def get(self, request, *args, **kwargs) :
+        google_login_flow =GoogleRawLoginFlowService()
+
+        authorization_url, state = google_login_flow.get_authorization_url()
+        request.session["google_oauth2_state"] = state
+
+        return redirect(authorization_url)
+    
+class GoogleLoginInputAPI(generics.GenericAPIView) :
+    serializer_class = GoogleLoginInputSerializer
+
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = [
+        permissions.IsAuthenticated,
+    ]
+    
+    def get(self, request, *args, **kwargs) :
+
+        serializer = self.get_serializer(data=request.data, context = {"request":request})
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        
+
 
 

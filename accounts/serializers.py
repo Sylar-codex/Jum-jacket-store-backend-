@@ -55,4 +55,31 @@ class SetNewPasswordSerializer(serializers.Serializer) :
         user.set_password(password)
         user.save()
         return user 
+    
+# Google auth serializers
+class GoogleLoginInputSerializer(serializers.Serializer) :
+    code = serializers.CharField(required=False)
+    error = serializers.CharField(required=False)   
+    state = serializers.CharField(required=False)
+
+    def validate(self, validated_data) :
+        code = validated_data["code"]
+        error = validated_data["error"]
+        state = validated_data["state"]
+        request = self.context["request"]
+
+        if error is not None :
+            return error
         
+        if code is None or state is None :
+            return serializers.ValidationError("Code and State are required")
+        
+        session_state = request.session.get("google_oauth2_state")
+
+        if session_state is None :
+            return serializers.ValidationError("CSRF check failed")
+        del request.session.get("google_oauth2_state")
+
+        if state != session_state :
+            return serializers.ValidationError("CSRF check failed")
+
